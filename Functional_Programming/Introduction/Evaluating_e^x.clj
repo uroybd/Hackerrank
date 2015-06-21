@@ -1,4 +1,4 @@
-(loop [test-case-remaining (Integer/parseInt (read-line))] ; First read a line and get the tet case number.
+(loop [test-case-remaining (Integer/parseInt (read-line))] ; First read a line and get the test case number.
   (while (not= 0 test-case-remaining) ; Loop for test case
     (do (println (let [factorial (fn [n] ; Factorial Function
                                    (reduce * (take n (range 1 (inc n)))))
