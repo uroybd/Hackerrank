@@ -1,3 +1,4 @@
 (defmacro predec
-[args]
-`(~(first args) ~@(map bigdec (rest args))))
+  "Evaluate decimal operation precisely"
+  [op & args]
+  `(~op ~@(map bigdec args)))
