@@ -1,25 +1,19 @@
-(defn abs [x]
-  "Return absolute value of x"
-  (if (< x 0)
-   (- x)
-   x))
-
-(defn square [x]
-  (* x x))
-
-(defn good-enough? [guess x precision]
-  (< (abs (- (square guess) x)) precision))
-
-(defn average [& args]
-  (/ (reduce + args) (count args)))
-
-(defn improve [guess x]
-  (average guess (/ x guess)))
-
-(defn sqrt-iter [guess x precision]
-  (if (good-enough? guess x precision)
-      guess
-      (sqrt-iter (improve guess x) x precision)))
-
-(defn sqrt [x precision]
-  (sqrt-iter 1.0 x precision))
+(defn sqrt
+([x] (sqrt x 0.001))
+([x precision]
+  (letfn [(abs [x]
+           (if (< x 0)
+            (- x)
+            x))
+          (square [x]
+           (* x x))
+          (average [& args]
+           (/ (reduce + args) (count args)))
+          (good-enough? [guess x precision]
+           (< (abs (- (square guess) x)) precision))
+          (improve [guess x]
+           (average guess (/ x guess)))]
+   (loop [guess 1.0 i x]
+    (if (good-enough? guess i precision)
+     guess
+     (recur (improve guess i) i))))))
