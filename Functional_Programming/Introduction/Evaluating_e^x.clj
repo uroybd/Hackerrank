@@ -12,5 +12,5 @@
 
 (loop [start 1 case (Integer/parseInt (read-line))]
   (if (<= start case)
-   (println (format "%.4f" (e-to-the-power-x (Float/parseFloat (read-line)))))
-   (recur (inc start) case)))
+   (println (format "%.4f" (e-to-the-power-x (Float/parseFloat (read-line))))))
+  (recur (inc start) case))
