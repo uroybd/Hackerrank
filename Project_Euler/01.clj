@@ -1,5 +1,7 @@
 (defn bigboy [x]
-  (reduce + (distinct (concat (take-nth 3 (range x)) (take-nth 5 (range x))))))
+  (apply + (filter #(or (zero? (rem % 3))
+                        (zero? (rem % 5)))
+                   (range x))))
 
 (loop [start 1 end (Integer/parseInt (read-line))]
   (when (<= start end)

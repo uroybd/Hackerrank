@@ -6,5 +6,5 @@
 
 (loop [start 1 case (Integer/parseInt (read-line))]
   (when (<= start case)
-    (println (reduce + (filter even? (fibo (Integer/parseInt (read-line))))))
+    (println (apply + (filter even? (fibo (Integer/parseInt (read-line))))))
     (recur (inc start) case)))
