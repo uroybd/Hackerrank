@@ -1,7 +1,7 @@
 (def arrlnth (read-string (read-line)))
 ;There are to version of the next line. Maybe for clojure version
-;(def strvec (atom (vec (clojure.string/split (read-line) #""))))
-(def strvec (atom (vec (rest (clojure.string/split (read-line) #"")))))
+(def strvec (atom (vec (clojure.string/split (read-line) #""))))
+;;(def strvec (atom (vec (rest (clojure.string/split (read-line) #"")))))
 (def cipherkey (read-string (read-line)))
 
 (defn cipher [i key]
