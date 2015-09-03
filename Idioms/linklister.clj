@@ -1,30 +1,35 @@
 (defn namef [string]
-  (last (clojure.string/split
-         string #"/")))
+  (last (clojure.string/split string #"/")))
 
-(defn file-linker
-  [dirstring link files]
+(defn file-linker [dirstring link files]
   (let [dname (namef dirstring)]
-    (mapv identity
-          (sort
-           (map (fn [y]
-                  (str "<a href=" \"
-                       link "/raw/master/"
-                       dname "/" (namef y) \" ">"
-                       (clojure.string/replace (namef y)
-                                               #"_" " ")
-                       "</a>"))
-                (filter #(re-find
-                          (re-pattern dname) %) files))))))
+    (mapv
+     identity
+     (sort
+      (map
+       (fn [y]
+         (str "<a href=" \"
+              link "/raw/master/"
+              dname "/" (namef y) \" ">"
+              (clojure.string/replace
+               (namef y)
+               #"_" " ")
+              "</a>"))
+       (filter
+        #(re-find (re-pattern dname) %)
+        files))))))
 
-(defn dir-linker [dirstring link]
+(fn dir-linker [dirstring link]
   (let [dname (namef dirstring)]
-     (str "<b><a href=" \"
-          link "/tree/master/"
-          dname "/" \" ">"
-          (clojure.string/replace
-           dname #"_" " ")
-          "</a></b>")))
+    (str "<b><a href=" \"
+         link "/tree/master/"
+         dname "/" \" ">"
+         (clojure.string/replace
+          dname #"_" " ")
+         "</a></b>")))
+
+(defn dir? [x]
+  (.isDirectory x))
 
 (defn linklister [path]
   (let [metadata (:out
@@ -39,7 +44,6 @@
                     (subs repostring
                           (inc (.indexOf repostring ":")))))
         directory (clojure.java.io/file path)
-        dir? #(.isDirectory %)
         files (sort
                (mapv identity
                      (filter
@@ -58,9 +62,8 @@
     (loop [cursor 0 dvec []]
       (if (> cursor (dec (count dirs)))
         (map println (flatten dvec))
-        (recur (inc cursor)
-               (conj dvec (dir-linker (nth dirs cursor) link)
-                     (file-linker (nth dirs cursor) link files)
-                     \newline))))))
-
-(linklister (read-line))
+        (recur
+         (inc cursor)
+         (conj dvec (dir-linker (nth dirs cursor) link)
+               (file-linker (nth dirs cursor) link files)
+               \newline))))))
