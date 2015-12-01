@@ -1,3 +1,4 @@
+
 (defn equation-divider [string]
   (flatten (map #(clojure.string/split % #";")
                 (map clojure.string/trim
